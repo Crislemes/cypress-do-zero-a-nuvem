@@ -99,13 +99,26 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.wrap($radio)
        })
     })
-    it.only('marcando meio de contato preferencial', function(){
+    it('marcando meio de contato preferencial "Telefone"', function(){
         cy.get('#email-checkbox').check()
         .should('have.value', 'email')
         cy.get('#email-checkbox').uncheck()
         cy.get('#phone-checkbox').check()
         .should('have.value', 'phone')
-        cy.get('#phone-checkbox').uncheck()
+        //cy.get('#phone-checkbox').uncheck()
     })
-    
+    it('exibe mensagem de successo quando o telefone se torna obrigatório e é preenchido ', function(){
+        cy.get('#firstName').type('Cristiane')
+        cy.get('#lastName').type('Teste')
+        cy.get('#email').type('cristi@teste.com')
+        cy.get('#phone').type('123456789')
+        cy.get('#phone-checkbox').click()
+        cy.get('#open-text-area').type('teste')
+        cy.get('.button').click()
+
+        cy.get('.success').should('be.visible')
+    })
+    it.only('seleciona arquivo da pasta fixtures', function(){
+        cy.get('#file-upload').selectFile('cypress/fixtures/example.json')
+    })
  })
