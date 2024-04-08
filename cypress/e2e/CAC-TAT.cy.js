@@ -118,20 +118,38 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
         cy.get('.success').should('be.visible')
     })
-    it.only('seleciona arquivo da pasta fixtures', function(){
-        cy.get('input[type="file"]')
+    it('seleciona arquivo da pasta fixtures', function(){
+        cy.get('#file-upload')
         .should('not.have.value')
         .selectFile('cypress/fixtures/example.json')
         .should(function($input){
             expect($input[0].files[0].name).to.equal('example.json')
         })
     })
-    it.only('seleciona um arquivo simulando um drag-and-drop', function(){
+    it('seleciona um arquivo simulando um drag-and-drop', function(){
         cy.get('input[type="file"]')
         .should('not.have.value')
-        .selectFile('cypress/fixtures/example.json')
+        .selectFile('cypress/fixtures/example.json', { action: 'drag-drop'})
         .should(function($input){
         expect($input[0].files[0].name).to.equal('example.json')
         })
  })
+ it('seleciona um arquivo utilizando uma fizture para a aqual foi dada um alias', function(){
+    cy.fixture('example.json').as('arquivoExemplo')
+    cy.get('#file-upload')
+    .selectFile('@arquivoExemplo')
+    .should(function($input){
+      expect($input[0].files[0].name).to.equal('example.json')
+    })
+  })
+  it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function(){
+    cy.get('#privacy a')
+    .should('have.attr', 'target', '_blank')
+  })
+  //abrindo um link em uma aba diferente e validando, como se estivese na mesma aba
+  it('acessa a página da política de privacidade removendo o target e então clicando no link', function(){
+    cy.get('#privacy a').invoke('removeAttr', 'target').click()
+
+    cy.contains('Talking About Testing').should ('be.visible')
+   })
 })
