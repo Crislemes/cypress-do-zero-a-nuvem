@@ -6,7 +6,6 @@
   "scripts": {
     "cypress:open": "cypress open --config-file=cypress.config.js",
     "cypress:run": "cypress run --config-file=cypress.config.js"
-    
   },
   "repository": {
     "type": "git",
@@ -23,7 +22,7 @@
   "license": "MIT",
   "homepage": "https://github.com/wlsf82/cypress-basico-v2#readme",
   "devDependencies": {
-    "cypress": "^13.7.2",
+    "cypress": "^13.11.0",
     "cypress-file-upload": "^5.0.8"
   }
 }
