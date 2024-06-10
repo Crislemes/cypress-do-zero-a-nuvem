@@ -5,10 +5,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     beforeEach (function() {
         cy.visit('./src/index.html')
     })
-it.only('verifica o título da aplicação', function() { 
+it('verifica o título da aplicação', function() { 
         cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
     })
-it.only('preenche os campos obrigatórios e envia o formulário', function() { 
+it('preenche os campos obrigatórios e envia o formulário', function() { 
         const longText = Cypress._.repeat ('teste', 100)
         cy.clock()
         
@@ -198,5 +198,12 @@ it('exibe e esconde as mensagens de sucesso e erro usando o .invoke', () => {
       .and('contain', 'Valide os campos obrigatórios!')
       .invoke('hide')
       .should('not.be.visible')
+  })
+
+  it.only('encontra o gato escondido', function (){
+    cy.get('#cat')
+      .invoke('show')
+      .should('be.visible')
+      
   })
 });
