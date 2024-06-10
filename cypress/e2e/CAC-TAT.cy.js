@@ -5,12 +5,11 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     beforeEach (function() {
         cy.visit('./src/index.html')
     })
-it('verifica o título da aplicação', function() { 
+it.only('verifica o título da aplicação', function() { 
         cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
     })
-it('preenche os campos obrigatórios e envia o formulário', function() { 
-        const longText = 'Teste, teste, teste, teste, teste, teste, teste, teste, teste, Teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste,teste, teste, teste, teste, teste, teste, teste, teste, teste,teste, teste, teste, teste, teste, teste, teste, teste, teste,teste, teste, teste, teste, teste, teste, teste, teste, teste.'
-        
+it.only('preenche os campos obrigatórios e envia o formulário', function() { 
+        const longText = Cypress._.repeat ('teste', 100)
         cy.clock()
         
         cy.get('#firstName').type('Cristiane')
@@ -184,7 +183,7 @@ it('acessa a página da política de privacidade removendo o target e então cli
     cy.contains('Talking About Testing').should ('be.visible')
    })
 
-it.only('exibe e esconde as mensagens de sucesso e erro usando o .invoke', () => {
+it('exibe e esconde as mensagens de sucesso e erro usando o .invoke', () => {
     cy.get('.success')
       .should('not.be.visible')
       .invoke('show')
