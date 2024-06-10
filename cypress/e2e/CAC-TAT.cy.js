@@ -1,6 +1,7 @@
 /// <reference types="Cypress" />/
 
 describe('Central de Atendimento ao Cliente TAT', function() {
+    const Tres_Segundos_em_Milessegundos = 3000
     beforeEach (function() {
         cy.visit('./src/index.html')
     })
@@ -9,6 +10,9 @@ it('verifica o título da aplicação', function() {
     })
 it('preenche os campos obrigatórios e envia o formulário', function() { 
         const longText = 'Teste, teste, teste, teste, teste, teste, teste, teste, teste, Teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste,teste, teste, teste, teste, teste, teste, teste, teste, teste,teste, teste, teste, teste, teste, teste, teste, teste, teste,teste, teste, teste, teste, teste, teste, teste, teste, teste.'
+        
+        cy.clock()
+        
         cy.get('#firstName').type('Cristiane')
         cy.get('#lastName').type('Teste')
         cy.get('#email').type('cristi@teste.com')
@@ -16,8 +20,15 @@ it('preenche os campos obrigatórios e envia o formulário', function() {
         cy.get('.button').click()
 
         cy.get('.success').should('be.visible')
+
+        cy.tick (Tres_Segundos_em_Milessegundos)
+
+        cy.get('.success').should('not.be.visible')
     })
 it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function(){
+    
+        cy.clock()
+
         cy.get('#firstName').type('Cristiane')
         cy.get('#lastName').type('Teste')
         cy.get('#email').type('cristiteste.com')
@@ -25,12 +36,19 @@ it('exibe mensagem de erro ao submeter o formulário com um email com formataç�
         cy.get('.button').click()
 
         cy.get('.error').should('be.visible')
+
+        cy.tick (Tres_Segundos_em_Milessegundos)
+
+        cy.get('.error').should('not.be.visible')
     })
 it('campo telefone permanece vazio quando inserido um valor não numérico', function(){
         cy.get('#phone').type('dseanhhhjj')
         .should('have.value', '')
     })
 it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
+        
+        cy.clock()
+    
         cy.get('#firstName').type('Cristiane')
         cy.get('#lastName').type('Teste')
         cy.get('#email').type('cristi@teste.com')
@@ -39,6 +57,11 @@ it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é p
         cy.get('.button').click()
 
         cy.get('.error').should('be.visible')
+
+        cy.tick (Tres_Segundos_em_Milessegundos)
+
+        cy.get('.error').should('not.be.visible')
+
     })
 it('preenche e limpa os campos nome, sobrenome, email e telefone', function(){
         cy.get('#firstName').type('Cristiane')
@@ -106,6 +129,9 @@ it('marcando meio de contato preferencial "Telefone"', function(){
         //cy.get('#phone-checkbox').uncheck()
     })
 it('exibe mensagem de successo quando o telefone se torna obrigatório e é preenchido ', function(){
+        
+        cy.clock()
+    
         cy.get('#firstName').type('Cristiane')
         cy.get('#lastName').type('Teste')
         cy.get('#email').type('cristi@teste.com')
@@ -115,6 +141,10 @@ it('exibe mensagem de successo quando o telefone se torna obrigatório e é pree
         cy.get('.button').click()
 
         cy.get('.success').should('be.visible')
+
+        cy.tick (Tres_Segundos_em_Milessegundos)
+
+        cy.get('.error').should('not.be.visible')
     })
 
 it('seleciona arquivo da pasta fixtures', function(){
