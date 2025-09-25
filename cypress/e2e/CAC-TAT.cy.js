@@ -1,7 +1,7 @@
 /// <reference types="cypress" />/
 
 describe('Central de Atendimento ao Cliente TAT', function () {
-  
+
   beforeEach(() => {
     cy.visit('./src/index.html')
   })
@@ -130,6 +130,33 @@ describe('Central de Atendimento ao Cliente TAT', function () {
   it('acessa a página da política de privacidade sem abrir nova aba', () => {
     cy.get('#privacy a').invoke('removeAttr', 'target').click()
     cy.contains('Talking About Testing').should('be.visible')
+  })
+
+  it('exibe e oculta as mensagens de sucesso e erro usando .invoke()', () => {
+    cy.get('.success')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Mensagem enviada com sucesso.')
+      .invoke('hide')
+      .should('not.be.visible')
+    cy.get('.error')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Valide os campos obrigatórios!')
+      .invoke('hide')
+      .should('not.be.visible')
+  })
+
+  it.only('enconte o gato', () => {
+    cy.get('#cat')
+      .invoke('show')
+      .should('be.visible')
+    cy.get('#title')
+      .invoke('text', 'CAT TAT')
+    cy.get('#subtitle')
+      .invoke('text', 'Eu amo gatos!')
   })
 })
 
